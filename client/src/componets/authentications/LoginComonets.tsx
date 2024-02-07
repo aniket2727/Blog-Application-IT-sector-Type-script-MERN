@@ -9,6 +9,8 @@ interface LoginComponentsProps {
   // You can define props here if needed
 }
 
+// ... (imports and interface remain unchanged)
+
 const LoginComponents: React.FC<LoginComponentsProps> = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -33,24 +35,37 @@ const LoginComponents: React.FC<LoginComponentsProps> = () => {
   };
 
   return (
-    <div>
-      <label>
-        Email:
-        <input type="text" value={email} onChange={handleEmailChange} />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input type="password" value={password} onChange={handlePasswordChange} />
-      </label>
-      <br />
-      <button type="button" onClick={handleSubmit}>
-        Submit
-      </button>
-      <button type="button" onClick={handleCreateAccount}>
-        Create Account
-      </button>
-    </div>
+    <>
+   
+      <div className='flex flex-col items-center justify-center h-screen'>
+        <div className='text center text-red-500 font-bold font-serif text-10vw '>
+            <h1 className='text-4xl'>Login here </h1>
+        </div>
+        <div className='text-center mx-auto items-center justify-center w-1/2 h-700 border  p-4 shadow-md'>
+          <div className='mb-4'>
+            <label className='inline-block text-left'>
+              Email:
+              <input type="text" value={email} onChange={handleEmailChange} className="px-10 rounded-md border border-gray-300 p-3" />
+            </label>
+          </div>
+          <div className='mb-4'>
+            <label className='inline-block text-left'>
+              Password:
+              <input type="password" value={password} onChange={handlePasswordChange} className="px-10 rounded-md border border-gray-300 p-3" />
+            </label>
+          </div>
+          <div className='flex'>
+            <button className='inline-block text-center mr-4 bg-green-500 text-white p-3 rounded-md cursor-pointer w-1/2' type="button" onClick={handleSubmit}>
+              Submit
+            </button>
+            <button className='inline-block text-center ml-4 bg-green-500 text-white p-3 rounded-md cursor-pointer w-1/2' type="button" onClick={handleCreateAccount}>
+              Create Account
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+
   );
 };
 
