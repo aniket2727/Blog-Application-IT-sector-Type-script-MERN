@@ -5,6 +5,7 @@ import HomeComponents from './componets/HomeComponets';
 import LoginComponents from './componets/authentications/LoginComonets';
 import RegisterComponents from './componets/authentications/RegisterComponets';
 import NavbarComponents from './componets/header/NavbarComponets';
+import CreatePost from './componets/postCreations/CreatePost';
 function App() {
   return (
     <div>
@@ -14,6 +15,7 @@ function App() {
         <Route path="/home"  element={<HomeComponents/>}/>
         <Route path="/login"  element={<LoginComponents/>}/>
         <Route path="/register"  element={<RegisterComponents/>}/>
+        <Route path="/create"  element={<CreatePost/>}/>
       </Routes>
       </BrowserRouter>
          
