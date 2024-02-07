@@ -4,10 +4,12 @@ import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import HomeComponents from './componets/HomeComponets';
 import LoginComponents from './componets/authentications/LoginComonets';
 import RegisterComponents from './componets/authentications/RegisterComponets';
+import NavbarComponents from './componets/header/NavbarComponets';
 function App() {
   return (
     <div>
       <BrowserRouter>
+      <NavbarComponents/>
       <Routes>
         <Route path="/home"  element={<HomeComponents/>}/>
         <Route path="/login"  element={<LoginComponents/>}/>

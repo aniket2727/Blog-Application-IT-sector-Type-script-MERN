@@ -4,7 +4,7 @@ import React from 'react';
 const HomeComponents: React.FC = () => {
   return (
     <div>
-        <h1  className='text-blue-400 text-center'>this is home home componets</h1>
+        <h1  className='text-blue-400 '>this is home home componets</h1>
     </div>
   );
 };
