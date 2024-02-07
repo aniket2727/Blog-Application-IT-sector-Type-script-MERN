@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUserData, clearUserData } from '../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
@@ -7,10 +7,15 @@ const NavbarComponents = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData);
-  console.log(userData);
+  const [searchName, setSearchName] = useState('');
 
   const handleLogout = () => {
     dispatch(clearUserData());
+  };
+
+  const handleSearch = () => {
+    console.log('Searching for:', searchName);
+  
   };
 
   return (
@@ -25,10 +30,24 @@ const NavbarComponents = () => {
         <div className='flex items-center'>
           {userData.email ? (
             <div className='flex'>
+              <input
+                type='text'
+                value={searchName}
+                onChange={(e) => setSearchName(e.target.value)}
+                placeholder='Search by name'
+                className='mr-2 px-4 py-2 border border-white rounded-lg'
+                style={{ width: '300px' }} // Set the width of the input
+              />
+              <button
+                className='bg-green-500 border border-white text-white rounded-lg font-bold p-2'
+                onClick={handleSearch}
+              >
+                Search
+              </button>
               <button className='ml-2 border border-white text-white rounded font-bold p-3' onClick={handleLogout}>
                 Logout
               </button>
-              <button className='ml-2 border border-white text-white rounded font-bold p-3'>Account</button>
+              <button className='ml-2 border border-white text-white rounded font-bold p-3' onClick={() => navigate('/profile')}>Account</button>
               <button className='ml-2 border border-white text-white rounded font-bold p-3' onClick={() => navigate('/create')}>
                 Create Blog
               </button>
