@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserData, selectUserData } from '../redux/userSlice';
+import { useDispatch,  } from 'react-redux';
+import { setUserData,  } from '../redux/userSlice';
 
 const LoginComponents: React.FC = () => {
   const dispatch = useDispatch();
-  const userData = useSelector(selectUserData);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-
-
-  console.log("this is user redux data",userData)
-
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };

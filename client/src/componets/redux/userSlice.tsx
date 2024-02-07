@@ -23,10 +23,16 @@ const userSlice = createSlice({
       state.name = action.payload.name;
       state.token = action.payload.token;
     },
+    clearUserData: (state) => {
+      // Clear user data by resetting to initial state
+      state.email = initialState.email;
+      state.name = initialState.name;
+      state.token = initialState.token;
+    },
   },
 });
 
-export const { setUserData } = userSlice.actions;
+export const { setUserData, clearUserData } = userSlice.actions;
 
 // Selector to get the entire user data
 export const selectUserData = (state: RootState) => state.user;
