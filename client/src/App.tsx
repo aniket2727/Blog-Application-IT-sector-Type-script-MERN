@@ -6,6 +6,7 @@ import LoginComponents from './componets/authentications/LoginComonets';
 import RegisterComponents from './componets/authentications/RegisterComponets';
 import NavbarComponents from './componets/header/NavbarComponets';
 import CreatePost from './componets/postCreations/CreatePost';
+import AccountComponets from './componets/header/AccountComponets';
 const NotFound = () => {
   return <h1>404 - Not Found</h1>;
 };
@@ -20,7 +21,7 @@ function App() {
           <Route path="/" element={<LoginComponents />} />
           <Route path="/register" element={<RegisterComponents />} />
           <Route path="/create" element={<CreatePost />} />
-          {/* Add the NotFound route */}
+          <Route path="/handle" element={<AccountComponets/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
