@@ -1,19 +1,15 @@
-
-
-
-
-
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserData, selectUserData } from '../redux/userSlice';
 
-interface LoginComponentsProps {
-  // You can define props here if needed
-}
-
-// ... (imports and interface remain unchanged)
-
-const LoginComponents: React.FC<LoginComponentsProps> = () => {
+const LoginComponents: React.FC = () => {
+  const dispatch = useDispatch();
+  const userData = useSelector(selectUserData);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
+
+  console.log("this is user redux data",userData)
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -24,22 +20,20 @@ const LoginComponents: React.FC<LoginComponentsProps> = () => {
   };
 
   const handleSubmit = () => {
-    // Implement your login logic here using 'email' and 'password'
-    console.log('Email:', email);
-    console.log('Password:', password);
+    const dummyName = 'John Doe';
+    const dummyToken = 'dummyToken';
+    dispatch(setUserData({ email, token: dummyToken, name: dummyName }));
   };
 
   const handleCreateAccount = () => {
-    // Implement your logic for creating an account
     console.log('Creating account...');
   };
 
   return (
     <>
-   
       <div className='flex flex-col items-center justify-center h-screen'>
         <div className='text center text-red-500 font-bold font-serif text-10vw '>
-            <h1 className='text-4xl'>Login here </h1>
+          <h1 className='text-4xl'>Login here </h1>
         </div>
         <div className='text-center mx-auto items-center justify-center w-1/2 h-700 border  p-4 shadow-md'>
           <div className='mb-4'>
@@ -65,7 +59,6 @@ const LoginComponents: React.FC<LoginComponentsProps> = () => {
         </div>
       </div>
     </>
-
   );
 };
 
