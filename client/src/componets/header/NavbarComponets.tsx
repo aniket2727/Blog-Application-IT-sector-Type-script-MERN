@@ -35,7 +35,7 @@ const NavbarComponents = () => {
             </div>
           ) : (
             <div className='flex'>
-              <button className='ml-2 border border-white text-white rounded font-bold p-3' onClick={() => navigate('/login')}>
+              <button className='ml-2 border border-white text-white rounded font-bold p-3' onClick={() => navigate('/')}>
                 Login
               </button>
               <button className='ml-2 border border-white text-white rounded font-bold p-3' onClick={() => navigate('/register')}>

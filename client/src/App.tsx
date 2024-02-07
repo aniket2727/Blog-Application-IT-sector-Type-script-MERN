@@ -6,19 +6,24 @@ import LoginComponents from './componets/authentications/LoginComonets';
 import RegisterComponents from './componets/authentications/RegisterComponets';
 import NavbarComponents from './componets/header/NavbarComponets';
 import CreatePost from './componets/postCreations/CreatePost';
+const NotFound = () => {
+  return <h1>404 - Not Found</h1>;
+};
+
 function App() {
   return (
     <div>
       <BrowserRouter>
-      <NavbarComponents/>
-      <Routes>
-        <Route path="/home"  element={<HomeComponents/>}/>
-        <Route path="/login"  element={<LoginComponents/>}/>
-        <Route path="/register"  element={<RegisterComponents/>}/>
-        <Route path="/create"  element={<CreatePost/>}/>
-      </Routes>
+        <NavbarComponents />
+        <Routes>
+          <Route path="/home" element={<HomeComponents />} />
+          <Route path="/" element={<LoginComponents />} />
+          <Route path="/register" element={<RegisterComponents />} />
+          <Route path="/create" element={<CreatePost />} />
+          {/* Add the NotFound route */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </BrowserRouter>
-         
     </div>
   );
 }
