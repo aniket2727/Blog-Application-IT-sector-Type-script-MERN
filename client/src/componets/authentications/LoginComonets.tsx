@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch,  } from 'react-redux';
 import { setUserData,  } from '../redux/userSlice';
-
+import { useNavigate } from 'react-router-dom';
 const LoginComponents: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate=useNavigate();
+
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,6 +20,7 @@ const LoginComponents: React.FC = () => {
     const dummyName = 'John Doe';
     const dummyToken = 'dummyToken';
     dispatch(setUserData({ email, token: dummyToken, name: dummyName }));
+    navigate('/home')
   };
 
   const handleCreateAccount = () => {
