@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUserData } from '../redux/userSlice';
-
+import { useNavigate } from 'react-router-dom';
 interface UserProfileData {
   username: string;
   profileImage: string;
   job: string;
   about: string;
 }
+
+
+
 
 const UserProfile: React.FC = () => {
   const userData = useSelector(selectUserData);
@@ -17,6 +20,8 @@ const UserProfile: React.FC = () => {
     job: '',
     about: '',
   });
+
+  const navigate= useNavigate()
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -35,7 +40,6 @@ const UserProfile: React.FC = () => {
           console.error('Failed to fetch user profile data');
         }
       } catch (error: any) {
-        // Use 'any' type for now, you can refine this based on the actual error structure
         console.error('Error fetching user profile data:', error.message);
       }
     };
@@ -54,14 +58,18 @@ const UserProfile: React.FC = () => {
             className='w-16 h-16 rounded-full mr-4'
           />
           <div>
-            <h3 className='text-xl font-bold'>Aniket Kadam{profileData.username}</h3>
-            <p className='text-gray-600'>Full stack developers{profileData.job}</p>
+            <h3 className='text-xl font-bold'>{profileData.username}</h3>
+            <p className='text-gray-600'>{profileData.job}</p>
           </div>
         </div>
         <div className='mt-4'>
           <h4 className='text-lg font-bold mb-2'>About Me</h4>
           <p>{profileData.about}</p>
         </div>
+
+        <button className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mt-4' onClick={()=>navigate('/handle')}>
+          Add Profile
+        </button>
       </div>
     </div>
   );
