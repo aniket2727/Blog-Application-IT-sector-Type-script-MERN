@@ -47,7 +47,9 @@ const RegisterComponents: React.FC<RegisterComponentsProps> = () => {
     .then((data) => {
       console.log('Registration successful:', data);
       if (data.message) {
-        navigate('/');  // Fix the typo here
+          setTimeout(() => {
+            navigate('/')
+          }, 2000);
       }
     })
     .catch((error) => {
