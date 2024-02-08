@@ -32,4 +32,18 @@ const Addblog = async ({ userName, userEmail,content }: BlogParams): Promise<any
 
 
 
-module.exports=Addblog;
+
+const Getallblogs = async (): Promise<any> => {
+  try {
+    const response = await fetch(`${base_url}/blog/blogs`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching blogs:', error);
+    throw error; // Rethrow the error to handle it in the calling code
+  }
+};
+
+
+
+export { Addblog, Getallblogs };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUserData } from '../redux/userSlice';
-import Addblog from '../handleapis/HandleBlogapi';
+import { Addblog } from '../handleapis/HandleBlogapi';
 
 const CreatePost: React.FC = () => {
   const [blogContent, setBlogContent] = useState<string>('');
