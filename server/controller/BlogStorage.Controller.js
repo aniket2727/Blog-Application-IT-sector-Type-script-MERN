@@ -4,23 +4,26 @@ const mongoose = require('mongoose');
 
 
 exports.createBlog = async (req, res) => {
-    try {
-      const { userName, userEmail, content } = req.body;
-  
-      const newBlog = new Blog({
-        userName,
-        userEmail,
-        content
-      });
-  
-      const savedBlog = await newBlog.save();
-  
-      res.status(201).json(savedBlog);
-    } catch (error) {
-      console.error('Error creating blog entry:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  };
+  try {
+    const { userName, userEmail, content } = req.body;
+
+    const newBlog = new Blog({
+      userName,
+      userEmail,
+      content
+    });
+
+    const savedBlog = await newBlog.save();
+
+    res.status(201).json({
+      message: 'Blog entry created successfully',
+      blog: savedBlog
+    });
+  } catch (error) {
+    console.error('Error creating blog entry:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 
 
