@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch,  } from 'react-redux';
 import { setUserData,  } from '../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../handleapis/AuthApi';
 const LoginComponents: React.FC = () => {
   const dispatch = useDispatch();
   const navigate=useNavigate();
@@ -16,12 +17,28 @@ const LoginComponents: React.FC = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = () => {
-    const dummyName = 'John Doe';
-    const dummyToken = 'dummyToken';
-    dispatch(setUserData({ email, token: dummyToken, name: dummyName }));
-    navigate('/home')
+  const handleSubmit = async () => {
+    try {
+      const result = await login({ email, pass: password });
+      console.log(result);
+  
+      if (result.message === 'Login successful') {
+        const dummyName = 'aniket';
+        const { token, email: userEmail } = result;
+        dispatch(setUserData({ email: userEmail, token, name: dummyName }));
+         setTimeout(() => {
+            navigate('/home')
+         }, 3000);
+      } else {
+        // Handle other cases, maybe display an error message to the user
+        console.error('Login failed:', result.message);
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      // Handle network errors or unexpected issues
+    }
   };
+  
 
   const handleCreateAccount = () => {
     console.log('Creating account...');
