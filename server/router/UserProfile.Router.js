@@ -4,13 +4,13 @@
 
 const express = require('express');
 const userController = require('../controller/Userinfo.Controller');
-//const authMiddleware = require('../middlewares/authMiddleware');
+const authMiddleware = require('../middleware/autherization');
 
 const router = express.Router();
 
 // Define routes
-router.get('/profile', userController.getUserProfile);
-router.put('/profile', userController.updateUserProfile);
-router.post('/profile', userController.createUserProfile);
+router.get('/profile', authMiddleware,  userController.getUserProfile);
+router.put('/profile', authMiddleware, userController.updateUserProfile);
+router.post('/profile', authMiddleware, userController.createUserProfile);
 
 module.exports = router;
