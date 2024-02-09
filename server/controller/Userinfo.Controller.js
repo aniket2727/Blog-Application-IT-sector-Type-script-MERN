@@ -3,32 +3,53 @@
 
 const User = require('../database/userInfoschema');
 
+const redis = require('redis');
+const client = redis.createClient();
+
+// ...
+
 exports.getUserProfile = async (req, res) => {
-    try {
-      // Get email from the query string
-      const userEmail = req.query.email;
-  
-      // Check if email is provided
-      if (!userEmail) {
-        return res.status(400).json({ error: 'Email parameter is required in the query string' });
-      }
-  
-      // Find user profile based on email
-      const userProfile = await User.findOne({ email: userEmail }).select(
-        'email name profilePhoto about jobTitle companyName birthdate'
-      );
-  
-      // Check if user profile is found
-      if (!userProfile) {
-        return res.status(404).json({ error: 'User not found' });
-      }
-  
-      res.json(userProfile);
-    } catch (error) {
-      console.error('Error fetching user profile:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+  try {
+    // Get email from the query string
+    const userEmail = req.query.email;
+
+    // Check if email is provided
+    if (!userEmail) {
+      return res.status(400).json({ error: 'Email parameter is required in the query string' });
     }
-  }; 
+
+    // Check if the data is already cached in Redis
+    client.get(userEmail, async (err, cachedProfile) => {
+      if (err) {
+        console.error('Error checking Redis cache:', err);
+      }
+
+      if (cachedProfile) {
+        // If cached data is found, return it
+        const userProfile = JSON.parse(cachedProfile);
+        res.json(userProfile);
+      } else {
+        // If not found in cache, fetch from the database
+        const userProfile = await User.findOne({ email: userEmail }).select(
+          'email name profilePhoto about jobTitle companyName birthdate'
+        );
+
+        // Check if user profile is found
+        if (!userProfile) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Cache the data in Redis for future requests
+        client.setex(userEmail, 3600, JSON.stringify(userProfile)); // Set expiration time to 1 hour
+
+        res.json(userProfile);
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 // Update user profile data using email
 exports.updateUserProfile = async (req, res) => {
