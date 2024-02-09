@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AdduserProfile } from '../handleapis/HandleProfile.Api';
+import { selectUserData} from '../redux/userSlice';
+import { useSelector } from 'react-redux';
 
 const CreateAccount: React.FC = () => {
   const navigate = useNavigate();
+  const userData = useSelector(selectUserData);
 
   const [about, setAbout] = useState<string>('');
   const [jobTitle, setJobTitle] = useState<string>('');
@@ -10,19 +14,22 @@ const CreateAccount: React.FC = () => {
   const [birthdate, setBirthdate] = useState<string>('');
   const [image, setImage] = useState<File | null>(null);
 
- const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  // Handle image upload logic
-  const selectedImage = e.target.files?.[0] || null;
-  setImage(selectedImage);
-  console.log(image);
-};
-
-
-  const handleSubmit = () => {
-    // Implement your create account logic here
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedImage = e.target.files?.[0] || null;
+    setImage(selectedImage);
+    console.log(selectedImage);
   };
 
-  const goToProfile = () => {
+  const handleSubmit = async () => {
+    const result = await AdduserProfile();
+    console.log(result);
+  };
+
+  const goToProfile = async () => {
+    const email = userData.email;
+    const name = userData.name;
+    const result = await AdduserProfile(email, name, image, about, jobTitle, companyName, birthdate);
+    console.log("this is result",result)
     navigate('/profile'); // Replace '/profile' with the actual URL of your profile page
   };
 
@@ -30,7 +37,7 @@ const CreateAccount: React.FC = () => {
     <div className="container mx-auto mt-8">
       <h1 className="text-2xl font-bold mb-4">Create Account</h1>
 
-      <form className="max-w-md mx-auto">
+      <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
         {/* Image Upload */}
         <div className="mb-4">
           <label htmlFor="image" className="block text-sm font-medium text-gray-600">
@@ -102,11 +109,7 @@ const CreateAccount: React.FC = () => {
         </div>
 
         {/* Submit Button */}
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-        >
+        <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
           Create Account
         </button>
 

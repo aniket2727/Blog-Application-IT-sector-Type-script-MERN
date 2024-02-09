@@ -9,9 +9,6 @@ const userinfoschema = new mongoose.Schema({
     type: String,
     unique: true,
   },
-  pass: {
-    type: String,
-  },
   profilePhoto: {
     type: String,
   },

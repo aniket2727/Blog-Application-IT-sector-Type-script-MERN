@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUserData } from '../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { Getuserprofile } from '../handleapis/HandleProfile.Api';
+
 interface UserProfileData {
   username: string;
   profileImage: string;
@@ -9,43 +11,30 @@ interface UserProfileData {
   about: string;
 }
 
-
-
-
 const UserProfile: React.FC = () => {
   const userData = useSelector(selectUserData);
-  const [profileData, setProfileData] = useState<UserProfileData>({
-    username: '',
-    profileImage: '',
-    job: '',
-    about: '',
-  });
-
-  const navigate= useNavigate()
+  const email = userData.email;
+  const [profileData, setProfileData] = useState<UserProfileData | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
+    const getuserprofiledata = async () => {
       try {
-        const response = await fetch('your_backend_api_endpoint/user/profile', {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${userData.token}`,
-          },
-        });
-
-        if (response.ok) {
-          const userProfileData: UserProfileData = await response.json();
-          setProfileData(userProfileData);
-        } else {
-          console.error('Failed to fetch user profile data');
-        }
-      } catch (error: any) {
-        console.error('Error fetching user profile data:', error.message);
+        const data = await Getuserprofile({ email });
+        setProfileData(data);
+      } catch (error) {
+        console.error('Error fetching user profile data:', error);
+        // Handle error, e.g., redirect to an error page
       }
     };
 
-    fetchUserProfile();
-  }, [userData.token]);
+    getuserprofiledata();
+  }, [email]);
+
+  if (!profileData) {
+    // Loading state, you can replace this with a loading spinner or message
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className='w-full h-screen bg-gray-200 p-4'>
@@ -67,7 +56,7 @@ const UserProfile: React.FC = () => {
           <p>{profileData.about}</p>
         </div>
 
-        <button className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mt-4' onClick={()=>navigate('/handle')}>
+        <button className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mt-4' onClick={() => navigate('/handle')}>
           Add Profile
         </button>
       </div>
